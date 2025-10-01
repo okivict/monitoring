@@ -6,3 +6,57 @@ services:
    - "9116:9116"
   volumes:
    - ./snmp.yml:/etc/snmp-exporter/snmp.yml
+
+  prometheus:
+   image: prom/prometheus:v2.53.0
+   container_name: prometheus
+   ports:
+    - "9050:9090"
+   volumes:
+    - ./prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    - ./prometheus/data:/prometheus
+   command: -config.file=/etc/prometheus/prometheus.yml
+   restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    pid: host
+    restart: unless-stopped
+
+  cadvisor:
+    image: gcr.io/google-containers/cadvisor:latest
+    container_name: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  snmp-exporter:
+    image: prom/snmp-exporter:v0.29.0
+    container_name: snmp-exporter
+    ports:
+      - "9116:9116"
+    volumes:
+      - ./snmp.yml:/etc/snmp-exporter/snmp.yml:ro
+    restart: unless-stopped
+
+volumes:
+  prometheus_data:
+    driver: local
