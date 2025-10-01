@@ -1,0 +1,8 @@
+services:
+ snmp-exporter:
+  image: prom/snmp-exporter:v0.29.0
+  container_name: snmp-exporter
+  ports:
+   - "9116:9116"
+  volumes:
+   - ./snmp.yml:/etc/snmp-exporter/snmp.yml
