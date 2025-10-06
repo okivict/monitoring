@@ -1,0 +1,50 @@
+modules:
+  mikrotik:
+    walk:
+      # Interface statistics (ifTable, ifXTable)
+      - 1.3.6.1.2.1.2.2                # ifTable
+      - 1.3.6.1.2.1.2.2.1.10           # ifInOctets
+      - 1.3.6.1.2.1.2.2.1.16           # ifOutOctets
+      - 1.3.6.1.2.1.31.1.1.1           # ifXTable
+      - 1.3.6.1.2.1.31.1.1.1.6         # ifHCInOctets
+      - 1.3.6.1.2.1.31.1.1.1.10        # ifHCOutOctets
+      - 1.3.6.1.2.1.31.1.1.1.15        # ifHighSpeed
+      - 1.3.6.1.2.1.31.1.1.1.18        # ifAlias
+      # System info
+      - 1.3.6.1.2.1.1                  # system
+      # CPU
+      - 1.3.6.1.4.1.14988.1.1.3        # mikrotikRouterOSCpu
+      # Memory
+      - 1.3.6.1.4.1.14988.1.1.4        # mikrotikRouterOSMemory
+      # Wireless
+      - 1.3.6.1.4.1.14988.1.1.8        # mikrotikRouterOSWireless
+      # Queues
+      - 1.3.6.1.4.1.14988.1.1.7        # mikrotikRouterOSQueueSimple
+      # DHCP leases
+      - 1.3.6.1.4.1.14988.1.1.6        # mikrotikRouterOSDhcp
+      # Routes
+      - 1.3.6.1.4.1.14988.1.1.2        # mikrotikRouterOSRoute
+      # Netwatch
+      - 1.3.6.1.4.1.14988.1.1.9        # mikrotikRouterOSNetwatch
+      # Hotspot
+      - 1.3.6.1.4.1.14988.1.1.10       # mikrotikRouterOSHotspot
+      # User manager
+      - 1.3.6.1.4.1.14988.1.1.11       # mikrotikRouterOSUserManager
+      # PPP
+      - 1.3.6.1.4.1.14988.1.1.12       # mikrotikRouterOSPPP
+      # Firewall
+      - 1.3.6.1.4.1.14988.1.1.13       # mikrotikRouterOSFirewall
+      # Bridge
+      - 1.3.6.1.4.1.14988.1.1.14       # mikrotikRouterOSBridge
+      # Capsman
+      - 1.3.6.1.4.1.14988.1.1.15       # mikrotikRouterOSCapsman
+      # System health
+      - 1.3.6.1.4.1.14988.1.1.17       # mikrotikRouterOSSystemHealth
+      # Temperature
+      - 1.3.6.1.4.1.14988.1.1.18       # mikrotikRouterOSTemperature
+    lookups:
+      - source_indexes: [ifIndex]
+        lookup: ifName
+    overrides:
+      ifAlias:
+        ignore: true
